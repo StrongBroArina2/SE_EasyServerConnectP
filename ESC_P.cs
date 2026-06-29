@@ -70,7 +70,7 @@ namespace EasyServerConnecting
                     string[] parts = lines[i].Split('|');
                     if (parts.Length == 2)
                     {
-                        servers[i].Name = parts[0].Trim();
+                        servers[i].Name = parts[0].Trim().Replace("_", "|");
                         servers[i].IpAddress = parts[1].Trim();
                     }
                 }
@@ -82,7 +82,8 @@ namespace EasyServerConnecting
             List<string> lines = new List<string>();
             foreach (var server in servers)
             {
-                lines.Add($"{server.Name}|{server.IpAddress}");
+                string safeName = server.Name.Replace("|", "_");
+                lines.Add($"{safeName}|{server.IpAddress}");
             }
             File.WriteAllLines(configFilePath, lines);
         }
@@ -145,11 +146,14 @@ namespace EasyServerConnecting
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.TopMost = true;
+
+            this.BackColor = System.Drawing.Color.FromArgb(30, 30, 30);
+            this.ForeColor = System.Drawing.Color.White;
+
 
             Panel scrollPanel = new Panel
             {
-                Size = new System.Drawing.Size(760, 860),
+                Size = new System.Drawing.Size(810, 1360),
                 Location = new System.Drawing.Point(20, 20),
                 AutoScroll = true
             };
@@ -193,7 +197,7 @@ namespace EasyServerConnecting
 
             Panel scrollPanel = new Panel
             {
-                Size = new System.Drawing.Size(760, 860),
+                Size = new System.Drawing.Size(810, 1360),
                 Location = new System.Drawing.Point(20, 20),
                 AutoScroll = true
             };
